@@ -1,0 +1,27 @@
+Title (sub[?] title)
+======================================================
+#Labeled priority
+#Defaults reads listing
+#Sorting to sort with numerical prio
+1. Item one dd/m #due date
+2. Item two dd/m (extra note) 
+3. Item three *DONE*
+4. Item 4 *DONE*
+======================================================
+Low prio listing #always unordered
+lp1
+lp2 (can have add notes if needed)
+lp3 #reuse same labels as above
+======================================================
+Commands list here
+Change sorting order
+Add new HP/LP
+Save
+Remove finished
+Cancel task
+Show due date for completed tasks
+Snapshot list
+
+class
+PriorityType/PrioNum/TaskName/Date/Status/Extra
+enum        /int    /str     /stru/bool  /str
