@@ -10,16 +10,13 @@ struct Task
 	//1 1 0 1/1 TaskName # Note Section
 	bool priority;
 	bool completed = 0;
-	short prioNum;
+	short id;
 	DueDate date;
 	std::string task;
-	std::string extra;
 
 	Task() = delete;
-	//ctor NOT EQUAL TO input handler
-	Task(bool sP, short sPN, DueDate sD, std::string sT, std::string sE);
 	//one of these is redundant...
-	Task(bool sP, bool fin, short sPN, DueDate sD, std::string sT, std::string sE);
+	Task(bool setPrio, bool setCompleted, short setId, DueDate setDate, std::string setTask);
 };
 
 std::ostream& operator<<(std::ostream& os, Task& task);
