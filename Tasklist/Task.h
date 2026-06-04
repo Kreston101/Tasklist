@@ -5,17 +5,16 @@
 
 struct Task
 {
-	//static task count, lp, hp
+	//lp, hp
 	//store format
-	//1 1 0 1/1 TaskName # Note Section
+	//1 1 0 1/1 TaskName
 	bool priority;
 	bool completed = 0;
 	short id;
 	DueDate date;
 	std::string task;
 
-	Task() = delete;
-	//one of these is redundant...
+	//Rule of zero, woooo
 	Task(bool setPrio, bool setCompleted, short setId, DueDate setDate, std::string setTask);
 };
 

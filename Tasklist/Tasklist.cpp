@@ -15,6 +15,19 @@ void PrintLPTask(const std::vector<Task>& vec);
 void SaveToFile(std::vector<Task>& vec, const std::string filepath);
 void NewTask(std::vector<Task>& vec, const std::string& cmd);
 void FinTask(std::vector<Task>& vec, const std::string& cmd);
+void UpdateTask(std::vector<Task>& vec, const std::string& cmd);
+/*void SortList(std::vector<Task>& vec, const std::string& cmd);
+* >sort the vector based on criteria
+* >options:
+* ->by date
+* ->by id(time creation)
+* ->manual organisation...?
+* 
+*/
+
+//option to remove all cleared task/hide them temporarily?
+
+//void remove task
 
 //auto sort priority based on due date
 //figure out if you're going to use the manual priority number
@@ -42,6 +55,7 @@ int main(int argc, char* argv[]) {
     std::getline(input, title);
     std::string line;
     while (std::getline(input, line)) {
+        //add reserve
         std::istringstream iss(line);
         bool priority{}, completed{};
         short id{}, day{}, month{};
@@ -49,8 +63,7 @@ int main(int argc, char* argv[]) {
         char drop;
         iss >> priority >> completed >> id >> day >> drop >> month >> std::ws;
         std::getline(iss, taskName);
-        Task nTask(priority, completed, id, DueDate(day,month), taskName);
-        TodoList.push_back(nTask);
+        TodoList.emplace_back(priority, completed, id, DueDate(day, month), taskName);
     }
     //file read op ends here
     PrintTasklist(TodoList);
@@ -119,11 +132,9 @@ void NewTask(std::vector<Task>& vec, const std::string& cmd) { //this is mega un
             ++id;
         }
     }
-    std::cout << "id set to " << id << '\n';
     iss >> day >> drop >> month >> std::ws;
     std::getline(iss, taskName); //add spliter for task and note section
-    Task nTask(priority, 0, id, DueDate(day, month), taskName);
-    vec.push_back(nTask);
+    vec.emplace_back(priority, 0, id, DueDate(day, month), taskName);
 }
 
 void FinTask(std::vector<Task>& vec, const std::string& cmd) {
@@ -133,10 +144,15 @@ void FinTask(std::vector<Task>& vec, const std::string& cmd) {
     iss >> drop >> taskId;
     for (Task& task : vec) {
         if (task.id == taskId) {
-            std::cout << "found a task with given id " << taskId << '\n';
             task.completed = !task.completed;
         }
     }
+}
+
+void UpdateTask(std::vector<Task>& vec, const std::string& cmd) {
+    //take in the command
+    //strip the u get the id, then the rest follows new task
+    //use move semantics for some reason
 }
 
 void PrintTasklist(const std::vector<Task>& vec) {
