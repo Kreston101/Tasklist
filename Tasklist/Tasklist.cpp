@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
         std::cout << "No file provided. Please enter the path manually: ";
         std::getline(std::cin, filepath);
     }
-    if (filepath.find(" \" ") && !filepath.empty()) {
+    if (filepath.find('\"') != std::string::npos && !filepath.empty()) {
         filepath.pop_back();
         filepath.erase(0,1);
     }
@@ -118,6 +118,10 @@ void SaveToFile(std::vector<Task>& vec, std::string filepath) {
 }
 
 void NewTask(std::vector<Task>& vec, const std::string& cmd) { //this is mega unsafe but its personal use
+    if (cmd.size() <= 1) {
+        std::cout << "Insufficent parameters\n";
+        return;
+    }
     std::istringstream iss(cmd);
     bool priority{};
     short id{}, day{}, month{};
@@ -139,6 +143,10 @@ void NewTask(std::vector<Task>& vec, const std::string& cmd) { //this is mega un
 
 void FinTask(std::vector<Task>& vec, const std::string& cmd) {
     short taskId{};
+    if (cmd.size() < 3) {
+        std::cout << "Insufficent parameters\n";
+        return;
+    }
     std::istringstream iss(cmd);
     char drop{};
     iss >> drop >> taskId;
@@ -156,7 +164,7 @@ void UpdateTask(std::vector<Task>& vec, const std::string& cmd) {
 }
 
 void PrintTasklist(const std::vector<Task>& vec) {
-    std::cout << title << '\n';
+    std::cout << '\n' << title << '\n';
     std::cout << std::setw(55) << std::setfill('=') << '\n';
     std::cout << "Todo:\n";
     PrintHPTask(vec);
