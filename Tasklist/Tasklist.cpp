@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <algorithm>
 #include "Task.h"
 #include "DueDate.h"
 
@@ -16,8 +17,9 @@ void SaveToFile(std::vector<Task>& vec, const std::string filepath);
 void NewTask(std::vector<Task>& vec, const std::string& cmd);
 void FinTask(std::vector<Task>& vec, const std::string& cmd);
 void UpdateTask(std::vector<Task>& vec, const std::string& cmd);
-/*void SortList(std::vector<Task>& vec, const std::string& cmd);
-* >sort the vector based on criteria
+void SortList(std::vector<Task>& vec, const std::string& cmd);
+void RemoveTask(std::vector<Task>& vec, const std::string& cmd);
+/* >sort the vector based on criteria
 * >options:
 * ->by date
 * ->by id(time creation)
@@ -92,6 +94,7 @@ int main(int argc, char* argv[]) {
             break;
         case 'o': //have fun
             std::cout << "Organised list with given filter\n";
+            SortList(TodoList, command);
             PrintTasklist(TodoList);
             break;
         default:
@@ -137,7 +140,7 @@ void NewTask(std::vector<Task>& vec, const std::string& cmd) { //this is mega un
         }
     }
     iss >> day >> drop >> month >> std::ws;
-    std::getline(iss, taskName); //add spliter for task and note section
+    std::getline(iss, taskName);
     vec.emplace_back(priority, 0, id, DueDate(day, month), taskName);
 }
 
@@ -159,8 +162,41 @@ void FinTask(std::vector<Task>& vec, const std::string& cmd) {
 
 void UpdateTask(std::vector<Task>& vec, const std::string& cmd) {
     //take in the command
-    //strip the u get the id, then the rest follows new task
-    //use move semantics for some reason
+    //MODIFY IN PLACE
+    short taskId{};
+    if (cmd.size() < 3){
+
+    }
+}
+
+void SortList(std::vector<Task>& vec, const std::string& cmd) {
+    //o d(ate) i(d)
+    if (cmd.size() <= 1) {
+        std::cout << "Insufficent parameters\n";
+        return;
+    }
+    std::istringstream iss(cmd);
+    char drop{};
+    char flag{};
+    iss >> drop >> flag;
+    switch (flag) {
+    case 'd':
+        std::sort(vec.begin(), vec.end(), [](Task a, Task b) {return a.date < b.date; });
+        break;
+    case 'i':
+        std::sort(vec.begin(), vec.end(), [](Task a, Task b) {return a.id < b.id; });
+        break;
+    }
+}
+
+//funny variadic?
+//NO!
+void RemoveTask(std::vector<Task>& vec, const std::string& cmd) {
+    //get id
+    //shift to back
+    //pop back
+
+    //ability to send multiple ids?
 }
 
 void PrintTasklist(const std::vector<Task>& vec) {

@@ -11,3 +11,4 @@ struct DueDate
 };
 
 std::ostream& operator<<(std::ostream& os, DueDate& date);
+bool operator<(DueDate const& lhs, DueDate const& rhs);
